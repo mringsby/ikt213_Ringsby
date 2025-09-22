@@ -4,7 +4,7 @@ import os
 
 def get_image_pairs():
     pairs = []
-    # Working directory images - exclude our output files
+    # Working directory images - exclude output files
     images = sorted([f for f in os.listdir('.') if f.lower().endswith(('.png', '.jpg', '.jpeg', '.tif', '.tiff'))
                     and not ('_orb.jpg' in f or '_sift.jpg' in f)])
     if len(images) >= 2:
@@ -64,7 +64,7 @@ for idx, (img1_path, img2_path) in enumerate(get_image_pairs()):
 
     matched_image = cv.drawMatches(image1, keypoints1, image2, keypoints2,good_matches[:100], None, flags=2)
 
-    # Save the result with cleaner naming
+    # Save the result with clean naming
     if idx == 0:  # Working directory images
         out_name = f'working_dir_orb.jpg'
     else:
