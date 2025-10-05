@@ -26,17 +26,24 @@ def grayscale(image):
 def hsv(image):
     return cv.cvtColor(image, cv.COLOR_BGR2HSV)
 
+
 def hue_shifted(image, emptyPictureArray, hue):
-    image = hsv(image)
     height, width, _ = image.shape
     emptyPictureArray = np.zeros((height, width, 3), dtype=np.uint8)
+
     for i in range(height):
         for j in range(width):
-            h, s, v = image[i, j]
-            h = (h + hue) % 180
-            emptyPictureArray[i, j] = [h, s, v]
+            b, g, r = image[i, j]
 
-    return cv.cvtColor(emptyPictureArray, cv.COLOR_HSV2BGR)
+            # make sure values dont exceed 255 or go below 0
+            # if we dont do this we get error: uint8 overflow
+            new_b = int((int(b) + hue) % 256)
+            new_g = int((int(g) + hue) % 256)
+            new_r = int((int(r) + hue) % 256)
+
+            emptyPictureArray[i, j] = [new_b, new_g, new_r]
+
+    return emptyPictureArray
 
 def smoothing(image):
     ksize = (15, 15)
