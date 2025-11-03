@@ -42,6 +42,7 @@ def align_image(image_to_align, reference_image, max_features=10, good_match_per
             if m.distance < good_match_percent * n.distance:
                 good_matches.append(m)
 
+    #sort to get max_features best matches
     good_matches = sorted(good_matches, key=lambda x: x.distance)[:max_features]
 
     #extract location of good matches
